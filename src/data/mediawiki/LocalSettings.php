@@ -15,12 +15,15 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+$wgShowExceptionDetails = true;
+$wgDevelopmentWarnings = true; 
+error_reporting(E_ALL);
 
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
 
 $wgSitename = "Private Wiki";
-$wgMetaNamespace = "Bitnami_MediaWiki";
+$wgMetaNamespace = "MediaWiki";
 
 ## The URL base path to the directory containing the wiki;
 ## defaults for all runtime URL paths are based off of this.
@@ -117,14 +120,14 @@ $wgDiff3 = "/usr/bin/diff3";
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'vector', 'monobook':
-$wgDefaultSkin = "vector";
+
+$wgDefaultSkin = "Vector";
 
 # Enabled skins.
 # The following skins were automatically enabled:
 wfLoadSkin( 'MonoBook' );
 wfLoadSkin( 'Timeless' );
 wfLoadSkin( 'Vector' );
-
 
 # End of automatically generated settings.
 # Add more configuration options below.
@@ -139,3 +142,38 @@ $wgGroupPermissions['*']['edit'] = false;
 
 # Prevent new user registrations except by sysops
 $wgGroupPermissions['*']['createaccount'] = false;
+
+wfLoadExtension( 'VisualEditor' );
+
+// // Enable by default for everybody
+$wgDefaultUserOptions['visualeditor-enable'] = 1;
+
+// // Optional: Set VisualEditor as the default for anonymous users
+// // otherwise they will have to switch to VE
+// // $wgDefaultUserOptions['visualeditor-editor'] = "visualeditor";
+
+// // Don't allow users to disable it
+$wgHiddenPrefs[] = 'visualeditor-enable';
+
+// // OPTIONAL: Enable VisualEditor's experimental code features
+// #$wgDefaultUserOptions['visualeditor-enable-experimental'] = 1;
+
+$wgVirtualRestConfig['modules']['parsoid'] = array(
+//     // URL to the Parsoid instance
+//     // Use port 8142 if you use the Debian package
+     'url' => 'http://parsoid:8000',
+//     // Parsoid "domain", see below (optional)
+//     'domain' => 'localhost',
+//     // Parsoid "prefix", see below (optional)
+//     //'prefix' => 'localhost'
+ );
+
+// // Forward users' Cookie: headers to Parsoid. Required for private wikis (login required to read).
+// // If the wiki is not private (i.e. $wgGroupPermissions['*']['read'] is true) this configuration
+// // variable will be ignored.
+// //
+// // WARNING: ONLY enable this on private wikis and ONLY IF you understand the SECURITY IMPLICATIONS
+// // of sending Cookie headers to Parsoid over HTTP. For security reasons, it is strongly recommended
+// // that $wgVirtualRestConfig['modules']['parsoid']['url'] be pointed to localhost if this setting is enabled.
+$wgVirtualRestConfig['modules']['parsoid']['forwardCookies'] = true;
+

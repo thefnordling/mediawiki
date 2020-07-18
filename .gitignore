@@ -1,0 +1,4 @@
+src/data/mariadb/*
+src/data/mediawiki/*
+!src/data/mediawiki/LocalSettings.php
+!src/data/mediawiki/extensions/Bootstrap/**

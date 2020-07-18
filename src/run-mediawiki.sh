@@ -1,4 +1,5 @@
 #!/bin/bash
+docker stop mediawiki
 docker container prune -f
 docker run -d \
 --name=mediawiki \
@@ -10,4 +11,4 @@ docker run -d \
 -e MEDIAWIKI_DATABASE_USER=but-are-ignored-since \
 -e MEDIAWIKI_DATABASE_PASSWORD=we-set-the-values-directly-in-LocalSettings.php \
 --restart=unless-stopped \
-bitnami/mediawiki:1.34.2  
+testing:why
