@@ -6,9 +6,10 @@ docker run -d \
 --network mediawiki \
 -p 8080:8080 \
 -v $(pwd)/data/mediawiki:/bitnami/mediawiki \
--e MEDIAWIKI_DATABASE_HOST=these-are-required \
--e MEDIAWIKI_DATABASE_NAME=by-the-bitnami-dockerfile \
--e MEDIAWIKI_DATABASE_USER=but-are-ignored-since \
--e MEDIAWIKI_DATABASE_PASSWORD=we-set-the-values-directly-in-LocalSettings.php \
+--env MEDIAWIKI_DATABASE_HOST=mediawiki-mariadb \
+--env MEDIAWIKI_DATABASE_NAME=mediawiki \
+--env MEDIAWIKI_DATABASE_USER=mediawiki \
+--env MEDIAWIKI_DATABASE_PASSWORD=password \
+--env MEDIAWIKI_HOST="localhost:8080" \
 --restart=unless-stopped \
-testing:why
+mw:latest \

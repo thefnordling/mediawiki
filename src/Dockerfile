@@ -1,9 +1,11 @@
 FROM bitnami/mediawiki
-WORKDIR /tmp
 USER root
+ADD entrypoint-with-visual-editor.sh /
+RUN chmod +x /entrypoint-with-visual-editor.sh
+WORKDIR /tmp
 RUN apt-get update -y
 RUN apt-get install wget -y
 RUN wget https://extdist.wmflabs.org/dist/extensions/VisualEditor-REL1_34-74116a7.tar.gz
-RUN wget https://extdist.wmflabs.org/dist/skins/MinervaNeue-REL1_34-d0be74a.tar.gz
-RUN tar -xzvf MinervaNeue-REL1_34-d0be74a.tar.gz -C /opt/bitnami/mediawiki/skins
-RUN tar -xzvf VisualEditor-REL1_34-74116a7.tar.gz -C /opt/bitnami/mediawiki/extensions
+USER 1001
+ENTRYPOINT [ "/entrypoint-with-visual-editor.sh" ]
+CMD [ "/opt/bitnami/scripts/apache/run.sh" ]
