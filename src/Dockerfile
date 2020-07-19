@@ -1,11 +1,11 @@
 FROM bitnami/mediawiki
+ENV SIMPLESAML_ADMIN_PWD default_simplesaml_admin_password
 USER root
-ADD entrypoint-with-visual-editor.sh /
-RUN chmod +x /entrypoint-with-visual-editor.sh
-WORKDIR /tmp
+ADD entrypoint-with-extras.sh /
+RUN chmod +x /entrypoint-with-extras.sh
+ADD extras.sh /
+RUN chmod +x /extras.sh
 RUN apt-get update -y
 RUN apt-get install wget -y
-RUN wget https://extdist.wmflabs.org/dist/extensions/VisualEditor-REL1_34-74116a7.tar.gz
-USER 1001
-ENTRYPOINT [ "/entrypoint-with-visual-editor.sh" ]
+ENTRYPOINT [ "/entrypoint-with-extras.sh" ]
 CMD [ "/opt/bitnami/scripts/apache/run.sh" ]

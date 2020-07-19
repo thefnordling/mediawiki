@@ -10,6 +10,7 @@ docker run -d \
 --env MEDIAWIKI_DATABASE_NAME=mediawiki \
 --env MEDIAWIKI_DATABASE_USER=mediawiki \
 --env MEDIAWIKI_DATABASE_PASSWORD=password \
---env MEDIAWIKI_HOST="localhost:8080" \
+--env MEDIAWIKI_HOST=localhost:8080 \
+--env SIMPLESAML_ADMIN_PWD=default_simplesaml_admin_password \
 --restart=unless-stopped \
 mw:latest \
